@@ -1,0 +1,4 @@
+@page
+@inject Microsoft.AspNetCore.Identity.UserManager<Identity_Sample.Models.AppUser> UserManager
+@model Identity_Sample.Pages.TestAuthorize3Model
+<p class="alert alert-danger">@UserManager.GetUserName(User), you are access TestAuthorize3</p>

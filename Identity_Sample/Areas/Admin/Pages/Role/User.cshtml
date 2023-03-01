@@ -1,0 +1,46 @@
+@page
+@model Identity_Sample.Areas.Admin.Pages.Role.UserModel
+@{
+    ViewData["Title"] = "USER LISTS";
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="@Model.StatusMessage"/>
+<table class="table table-striped">
+    <tr>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var user in @Model.users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.listRoles</td>
+            <td>
+                <form method="POST" class="d-inline">
+                    <button name="Input.ID" value="@user.Id" class="btn btn-primary btn-sm"
+                            asp-page="./AddUserRole">
+                        Update User Role
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}
+
+@{
+    Func<int?, string> generateUrl = (int? _pageNumber) => { return Url.Page("./User", new { pageNumber = _pageNumber }); };
+
+    var dataPaging = new
+    {
+        currentPage = Model.pageNumber,
+        countPages = Model.totalPages,
+        generateUrl = generateUrl
+    };
+}
+<partial name="_Paging" model="@dataPaging"/>

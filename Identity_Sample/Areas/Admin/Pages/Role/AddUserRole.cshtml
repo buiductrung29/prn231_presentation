@@ -1,0 +1,40 @@
+﻿@page
+@model Identity_Sample.Areas.Admin.Pages.Role.AddUserRole
+@{
+    ViewData["Title"] = "Update Role for User";
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <p>Choose role to assign to <strong>@Model.Input.Name</strong></p>
+        <form method="POST">
+            <partial name="_StatusMessage" model="@Model.StatusMessage"/>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Input.RoleNames)
+                @Html.ListBoxFor(x => x.Input.RoleNames,
+                    new SelectList(Model.AllRoles),
+                    new { @class = "w-100", id = "selectrole" })
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Input.ID"></input>
+            <input type="hidden" asp-for="isConfirmed"></input>
+            <a class="btn btn-primary" asp-page="./User">User List</a>
+            <button type="submit" class="btn btn-danger">Update</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css"/>
+    <script>
+        $('selectrole').multipleSelect({
+            selectAll: false,
+            keepOpen: false,
+            isOpen: false
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial"/>
+}
